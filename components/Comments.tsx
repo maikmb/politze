@@ -31,14 +31,18 @@ export default function Comments({ politicianId }: CommentsProps) {
 
   const loadComments = async () => {
     setLoading(true)
+    setError('')
     try {
       const response = await fetch(`/api/comments/${politicianId}`)
       if (response.ok) {
         const data = await response.json()
         setComments(data)
+      } else {
+        setError('Erro ao carregar comentários')
       }
     } catch (err) {
       console.error('Error loading comments:', err)
+      setError('Erro ao carregar comentários')
     } finally {
       setLoading(false)
     }
@@ -126,6 +130,10 @@ export default function Comments({ politicianId }: CommentsProps) {
         {loading ? (
           <div className="text-center py-8 text-gray-500">
             Carregando comentários...
+          </div>
+        ) : error && comments.length === 0 ? (
+          <div className="text-center py-8 text-red-500">
+            {error}
           </div>
         ) : comments.length === 0 ? (
           <div className="text-center py-8 text-gray-500">

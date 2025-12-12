@@ -1,7 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { runAutomation } from '@/scripts/runAutomation'
 
-// Simple in-memory lock to prevent concurrent automation runs
+/**
+ * Simple in-memory lock to prevent concurrent automation runs
+ * NOTE: For production with multiple instances, use a distributed lock
+ * mechanism like Redis or a database-based lock
+ */
 let isRunning = false
 let lastRunTime: number | null = null
 

@@ -51,11 +51,17 @@ export default async function handler(
 
       const { content } = req.body
 
-      if (!content || typeof content !== 'string' || content.trim().length === 0) {
+      if (!content || typeof content !== 'string') {
         return res.status(400).json({ error: 'Comment content is required' })
       }
 
-      if (content.length > COMMENT_CONFIG.MAX_LENGTH) {
+      const trimmedContent = content.trim()
+
+      if (trimmedContent.length === 0) {
+        return res.status(400).json({ error: 'Comment content is required' })
+      }
+
+      if (trimmedContent.length > COMMENT_CONFIG.MAX_LENGTH) {
         return res.status(400).json({ 
           error: `Comment is too long (max ${COMMENT_CONFIG.MAX_LENGTH} characters)` 
         })
@@ -73,7 +79,7 @@ export default async function handler(
       // Create comment
       const comment = await prisma.comment.create({
         data: {
-          content: content.trim(),
+          content: trimmedContent,
           userId: user.id,
           politicianId,
         },

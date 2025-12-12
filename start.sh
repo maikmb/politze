@@ -19,7 +19,7 @@ fi
 echo -e "${GREEN}🐳 Iniciando PostgreSQL com Docker Compose...${NC}"
 docker-compose up -d
 
-// Wait for PostgreSQL to be ready
+# Wait for PostgreSQL to be ready
 echo -e "${YELLOW}⏳ Aguardando PostgreSQL ficar pronto...${NC}"
 until docker-compose exec -T postgres pg_isready -U politze > /dev/null 2>&1; do
     echo -e "${YELLOW}   Aguardando banco de dados...${NC}"

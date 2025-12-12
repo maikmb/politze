@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { RANKING_WEIGHTS } from '../lib/config'
+import { RANKING_WEIGHTS, RANKING_CONFIG } from '../lib/config'
 
 const prisma = new PrismaClient()
 
@@ -27,19 +27,20 @@ async function calculateRankings() {
 
       // Presence rate score
       if (politician.presenceRate) {
-        score += (politician.presenceRate / 100) * (RANKING_WEIGHTS.PRESENCE_RATE * 100)
+        score += (politician.presenceRate / RANKING_CONFIG.SCORE_MULTIPLIER) * 
+                 (RANKING_WEIGHTS.PRESENCE_RATE * RANKING_CONFIG.SCORE_MULTIPLIER)
       }
 
       // Proposals approval rate score
       if (politician.proposalsCount > 0) {
         const approvalRate = politician.approvedProposals / politician.proposalsCount
-        score += approvalRate * (RANKING_WEIGHTS.APPROVAL_RATE * 100)
+        score += approvalRate * (RANKING_WEIGHTS.APPROVAL_RATE * RANKING_CONFIG.SCORE_MULTIPLIER)
       }
 
       // Budget efficiency score (lower spending percentage is better)
       if (politician.totalBudget && politician.spentBudget) {
         const spendingRate = politician.spentBudget / politician.totalBudget
-        score += (1 - spendingRate) * (RANKING_WEIGHTS.BUDGET_EFFICIENCY * 100)
+        score += (1 - spendingRate) * (RANKING_WEIGHTS.BUDGET_EFFICIENCY * RANKING_CONFIG.SCORE_MULTIPLIER)
       }
 
       return {
