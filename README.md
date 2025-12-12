@@ -47,6 +47,19 @@ cd politze
 ./start.sh
 ```
 
+Ou use o Makefile para comandos mais granulares:
+
+```bash
+# Ver todos os comandos disponíveis
+make help
+
+# Setup completo (Docker + Install + Migrate + Seed)
+make setup
+
+# Depois, inicie a aplicação
+make dev
+```
+
 O script irá:
 1. ✅ Criar arquivo `.env` (se não existir)
 2. ✅ Iniciar o PostgreSQL com Docker Compose
