@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { COMMENT_CONFIG } from '@/lib/config'
 
 interface Comment {
   id: string
@@ -93,7 +94,7 @@ export default function Comments({ politicianId }: CommentsProps) {
             placeholder="Deixe seu comentário sobre este político..."
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
             rows={4}
-            maxLength={1000}
+            maxLength={COMMENT_CONFIG.MAX_LENGTH}
             disabled={submitting}
           />
           {error && (
@@ -101,7 +102,7 @@ export default function Comments({ politicianId }: CommentsProps) {
           )}
           <div className="flex justify-between items-center mt-2">
             <span className="text-sm text-gray-500">
-              {newComment.length}/1000 caracteres
+              {newComment.length}/{COMMENT_CONFIG.MAX_LENGTH} caracteres
             </span>
             <button
               type="submit"

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]'
 import { prisma } from '@/lib/prisma'
+import { COMMENT_CONFIG } from '@/lib/config'
 
 export default async function handler(
   req: NextApiRequest,
@@ -54,8 +55,10 @@ export default async function handler(
         return res.status(400).json({ error: 'Comment content is required' })
       }
 
-      if (content.length > 1000) {
-        return res.status(400).json({ error: 'Comment is too long (max 1000 characters)' })
+      if (content.length > COMMENT_CONFIG.MAX_LENGTH) {
+        return res.status(400).json({ 
+          error: `Comment is too long (max ${COMMENT_CONFIG.MAX_LENGTH} characters)` 
+        })
       }
 
       // Find user by email

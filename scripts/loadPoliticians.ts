@@ -22,11 +22,18 @@ interface TransparencyData {
  * https://api.portaldatransparencia.gov.br/
  * 
  * You need to register at Portal da Transparência to get an API key
+ * Set environment variable: TRANSPARENCIA_API_KEY
  */
 async function loadPoliticiansData() {
   console.log('👥 Starting politicians data import from Portal da Transparência...')
 
   try {
+    const useMockData = !process.env.TRANSPARENCIA_API_KEY
+    
+    if (useMockData) {
+      console.log('⚠️  Using mock data. Set TRANSPARENCIA_API_KEY to use real API')
+    }
+    
     // Mock data - In production, fetch from Portal da Transparência API
     // API documentation: https://api.portaldatransparencia.gov.br/swagger-ui.html
     const mockPoliticians: TransparencyData[] = [
