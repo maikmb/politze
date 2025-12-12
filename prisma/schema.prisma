@@ -51,6 +51,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   ratings       Rating[]
+  comments      Comment[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -92,6 +93,7 @@ model Politician {
   rankPosition     Int?
   
   ratings          Rating[]
+  comments         Comment[]
   news             News[]
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -150,5 +152,19 @@ model Event {
   updatedAt   DateTime @updatedAt
 
   @@index([date, state, city])
+}
+
+model Comment {
+  id           String     @id @default(cuid())
+  content      String     @db.Text
+  userId       String
+  politicianId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  politician   Politician @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+
+  @@index([politicianId, createdAt])
 }
 

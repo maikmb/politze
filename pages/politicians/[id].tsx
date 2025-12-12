@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import Comments from '@/components/Comments'
 
 interface PoliticianDetailProps {
   politician: any
@@ -184,6 +185,9 @@ export default function PoliticianDetail({ politician }: PoliticianDetailProps) 
                   </div>
                 </div>
               )}
+
+              {/* Comments Section */}
+              <Comments politicianId={politician.id} />
             </div>
 
             {/* Sidebar */}
