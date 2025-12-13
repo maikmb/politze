@@ -6,7 +6,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "automation": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/runAutomation.ts",
+    "load-news": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/loadNews.ts",
+    "load-politicians": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/loadPoliticians.ts",
+    "calculate-rankings": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/calculateRankings.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
